@@ -1,0 +1,160 @@
+:root {
+  --bg-color: #0c0d12;
+  --card-bg: rgba(255, 255, 255, 0.05);
+  --glass-border: rgba(255, 255, 255, 0.1);
+  --text-main: #f0f0f5;
+  --text-dim: #a1a1aa;
+  --accent-color: #7c3aed;
+  --accent-glow: rgba(124, 58, 237, 0.3);
+  --success-color: #10b981;
+  --font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Inter', sans-serif;
+  background-color: #000000;
+  color: #ffffff;
+  overflow-x: hidden;
+  min-height: 100vh;
+}
+
+.glass-card {
+  background: var(--card-bg);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--glass-border);
+  border-radius: 24px;
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+  padding: 2rem;
+}
+
+.glow-text {
+  text-shadow: 0 0 20px var(--accent-glow);
+}
+
+@keyframes slideUpFadeIn {
+  from {
+    transform: translateY(100px);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes fadeOutSlideDown {
+  from {
+    transform: translateY(0);
+    opacity: 1;
+  }
+
+  to {
+    transform: translateY(100px);
+    opacity: 0;
+  }
+}
+
+.animate-in {
+  animation: slideUpFadeIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.animate-out {
+  animation: fadeOutSlideDown 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Scrollbar for admin */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--glass-border);
+  border-radius: 10px;
+}
+
+/* Aurora Mesh Gradient Animation */
+.aurora-mesh {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: #0a0a0c;
+  z-index: 0;
+}
+
+.aurora-mesh::before,
+.aurora-mesh::after {
+  content: '';
+  position: absolute;
+  width: 150%;
+  height: 150%;
+  top: -25%;
+  left: -25%;
+  filter: blur(80px);
+  /* Reduced blur slightly for sharper color */
+  opacity: 0.8;
+  /* Increased from 0.5 */
+  animation-iteration-count: infinite;
+  animation-timing-function: ease-in-out;
+  animation-direction: alternate;
+  mix-blend-mode: screen;
+  /* clearer, brighter blends */
+}
+
+.aurora-mesh::before {
+  /* Vibrant Pink/Purple focus */
+  background-image:
+    radial-gradient(circle at 30% 30%, #ff06b5 0%, transparent 50%),
+    radial-gradient(circle at 70% 60%, #9d4eff 0%, transparent 50%);
+  animation: aurora-move-1 18s infinite alternate;
+}
+
+.aurora-mesh::after {
+  /* Bright Cyan/Blue focus */
+  background-image:
+    radial-gradient(circle at 70% 30%, #00ffff 0%, transparent 50%),
+    radial-gradient(circle at 30% 70%, #3b82f6 0%, transparent 50%);
+  animation: aurora-move-2 25s infinite alternate;
+}
+
+@keyframes aurora-move-1 {
+  0% {
+    transform: translate(-5%, -5%) scale(1);
+  }
+
+  50% {
+    transform: translate(5%, 2%) scale(1.1);
+  }
+
+  100% {
+    transform: translate(0%, 5%) scale(0.95);
+  }
+}
+
+@keyframes aurora-move-2 {
+  0% {
+    transform: translate(5%, 5%) scale(0.9);
+  }
+
+  50% {
+    transform: translate(-5%, -2%) scale(1.05);
+  }
+
+  100% {
+    transform: translate(-2%, -5%) scale(1);
+  }
+}
