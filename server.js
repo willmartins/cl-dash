@@ -216,7 +216,12 @@ async function checkShopifyUpdates() {
 app.get('/api/config', async (req, res) => {
   console.log('GET /api/config called');
   const data = await getConfigs();
-  res.json(data);
+  // Inject metadata for frontend debugging
+  const responseData = {
+    ...(data.toObject ? data.toObject() : data),
+    _meta: { mongoConnected: isMongoConnected }
+  };
+  res.json(responseData);
 });
 
 

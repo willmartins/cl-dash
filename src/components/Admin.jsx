@@ -129,7 +129,19 @@ const Admin = ({ config, refresh }) => {
         <div className="admin-container">
             <div className="admin-header">
                 <h1>Dashboard Control Center</h1>
-                <button className="save-btn" onClick={saveConfig}>Save All Changes</button>
+                <div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
+                    <div style={{
+                        padding: '0.5rem 1rem',
+                        borderRadius: '8px',
+                        background: config._meta?.mongoConnected ? '#10b981' : '#ef4444',
+                        color: 'white',
+                        fontWeight: 'bold',
+                        fontSize: '0.8rem'
+                    }}>
+                        {config._meta?.mongoConnected ? 'DB Connected' : 'DB Disconnected (Not Saving!)'}
+                    </div>
+                    <button className="save-btn" onClick={saveConfig}>Save All Changes</button>
+                </div>
             </div>
 
             <div className="admin-grid-top">
