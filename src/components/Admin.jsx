@@ -88,26 +88,7 @@ const Admin = ({ config, refresh }) => {
         refresh();
     };
 
-    const addReview = () => {
-        if (localConfig.reviews.length >= 20) return alert('Max 20 reviews allowed');
-        setLocalConfig(prev => ({
-            ...prev,
-            reviews: [...prev.reviews, { name: '', product: '', review: '' }]
-        }));
-    };
 
-    const updateReview = (index, key, value) => {
-        const newReviews = [...localConfig.reviews];
-        newReviews[index][key] = value;
-        setLocalConfig(prev => ({ ...prev, reviews: newReviews }));
-    };
-
-    const removeReview = (index) => {
-        setLocalConfig(prev => ({
-            ...prev,
-            reviews: prev.reviews.filter((_, i) => i !== index)
-        }));
-    };
 
     if (!isAuthenticated) {
         return (
@@ -194,25 +175,26 @@ const Admin = ({ config, refresh }) => {
             </div>
 
             <div className="admin-grid-bottom">
-                <section className="glass-card review-section">
+                <section className="glass-card gallery-section" style={{ gridColumn: '1 / -1' }}>
                     <div className="section-header">
-                        <h2>Customer Reviews ({localConfig.reviews.length}/20)</h2>
-                        <button onClick={addReview} className="add-btn">+</button>
+                        <h2>Team Photo Gallery</h2>
+                        {config.gallery.length > 0 && (
+                            <button
+                                onClick={async () => {
+                                    if (confirm('Are you sure you want to delete ALL photos? This cannot be undone.')) {
+                                        for (const img of config.gallery) {
+                                            await deleteImage(img);
+                                        }
+                                    }
+                                }}
+                                className="remove-btn"
+                                style={{ marginTop: 0, background: '#ef4444' }}
+                            >
+                                Clear All Photos
+                            </button>
+                        )}
                     </div>
-                    <div className="scroll-area">
-                        {localConfig.reviews.map((rev, i) => (
-                            <div key={i} className="review-item">
-                                <input placeholder="Name" value={rev.name} onChange={e => updateReview(i, 'name', e.target.value)} />
-                                <input placeholder="Product" value={rev.product} onChange={e => updateReview(i, 'product', e.target.value)} />
-                                <textarea placeholder="Review" value={rev.review} onChange={e => updateReview(i, 'review', e.target.value)} />
-                                <button onClick={() => removeReview(i)} className="remove-btn">Remove</button>
-                            </div>
-                        ))}
-                    </div>
-                </section>
 
-                <section className="glass-card gallery-section">
-                    <h2>Team Photo Gallery</h2>
                     <div className="upload-box">
                         <label htmlFor="file-upload" className={`custom-file-upload ${isUploading ? 'uploading' : ''}`}>
                             {isUploading ? 'Uploading...' : 'Select Multiple Photos'}
