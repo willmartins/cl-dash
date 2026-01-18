@@ -122,7 +122,9 @@ async function saveToken(shop, token) {
 app.use(cors());
 app.use(bodyParser.json());
 // Serve static uploads only if local
-app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+app.get('/api/ping', (req, res) => {
+  res.json({ status: 'ok' });
+});
 
 // --- Upload Logic (Cloudinary vs Local) ---
 const upload = multer({ storage: multer.memoryStorage() }); // Always memory for Vercel/Cloudinary
@@ -207,12 +209,11 @@ async function checkShopifyUpdates() {
 // --- Routes ---
 
 app.get('/api/config', async (req, res) => {
-  // 1. Check for stale shopify data
-  await checkShopifyUpdates();
-  // 2. Return (possibly updated) data
+  console.log('GET /api/config called');
   const data = await getConfigs();
   res.json(data);
 });
+
 
 app.post('/api/config', async (req, res) => {
   // Password check could go here
