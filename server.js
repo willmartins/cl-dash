@@ -33,25 +33,41 @@ cloudinary.config({
 let isMongoConnected = false;
 let mongoError = null;
 
-if (process.env.MONGODB_URI) {
-  // Sanitize URI: remove surrounding quotes if present (common Vercel copy-paste error)
-  const uri = process.env.MONGODB_URI.replace(/^['"]|['"]$/g, '');
+// MongoDB Connection Pattern for Serverless
+let cachedPromise = null;
 
-  mongoose.connect(uri, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-    serverSelectionTimeoutMS: 5000, // Fail faster if network is blocked
-    socketTimeoutMS: 45000,
-  })
-    .then(() => {
+const connectToDatabase = async () => {
+  if (isMongoConnected) return;
+  if (!process.env.MONGODB_URI) return;
+
+  if (!cachedPromise) {
+    const uri = process.env.MONGODB_URI.replace(/^['"]|['"]$/g, '');
+    cachedPromise = mongoose.connect(uri, {
+      serverSelectionTimeoutMS: 5000,
+      socketTimeoutMS: 45000,
+      dbName: 'cl-dash' // Explicitly set DB name here just in case uri parsing fails
+    }).then((mongoose) => {
       isMongoConnected = true;
       console.log('Connected to MongoDB');
-    })
-    .catch(err => {
+      return mongoose;
+    }).catch(err => {
       console.error('MongoDB error:', err);
       mongoError = err.message;
+      isMongoConnected = false;
+      cachedPromise = null; // Reset promise to retry next time
+      throw err;
     });
-}
+  }
+
+  try {
+    await cachedPromise;
+  } catch (e) {
+    // Already handled in catch above, but ensure execution doesn't explode
+  }
+};
+
+// Initial connection attempt (fire and forget for local, await in handlers for serverless)
+connectToDatabase();
 
 // ...
 
@@ -96,6 +112,7 @@ const TOKENS_FILE = path.join(__dirname, 'tokens.json');
 
 // Get Data (MongoDB > Local JSON)
 async function getConfigs() {
+  await connectToDatabase(); // Ensure we try to connect first
   try {
     if (isMongoConnected) {
       let doc = await DashboardConfig.findOne({ id: 'main' });
@@ -127,6 +144,7 @@ async function getConfigs() {
 
 // Save Data
 async function saveConfigs(data) {
+  await connectToDatabase();
   if (isMongoConnected) {
     // Ensure "id" is stripped if passed in data to avoid immutable field error, 
     // or just use findOneAndUpdate
