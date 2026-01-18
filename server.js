@@ -48,7 +48,7 @@ const configSchema = new mongoose.Schema({
   kitchenWelcome: String,
   dispatchMessage: String,
   dispatchWelcome: String,
-  gallery: [String],
+  gallery: [],
   reviews: [{ name: String, product: String, review: String }],
   shopifyData: {
     retail: { today: Number, unfulfilled: Number },

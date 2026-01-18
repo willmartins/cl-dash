@@ -1,56 +1,7 @@
 {
-  "logoUrl": "https://www.cocoaloco.com/cdn/shop/files/cocoalocologo.png",
-  "kitchenMessage": "🎉 Happy Birthday Jeff!\n\nToday we need to focus on\n✨ Finishing the bars\n✨ Sorting this out\n✨ Sorting that out\n\nLet's smash this!",
-  "kitchenWelcome": "Hey Hey Kitchen Team!",
-  "dispatchMessage": "🎉 Happy Birthday Jeff!\n\nToday we need to focus on\n✨ Finishing the bars\n✨ Sorting this out\n✨ Sorting that out\n\nLet's smash this!",
-  "dispatchWelcome": "Hello Dispatch!",
-  "gallery": [
-    "/uploads/1768658743208-Gemini_Generated_Image_mek73jmek73jmek7.png",
-    "/uploads/1768658752828-Macap-Invite.jpg",
-    "/uploads/1768658756021-workshop-machine-6-scaled.jpg",
-    "/uploads/1768658858594-BF.jpg",
-    "/uploads/1768667094099-Macap-Invite.jpg",
-    "/uploads/1768667097495-workshop-machine-6-scaled.jpg",
-    "/uploads/1768667116054-SCA-35.jpg",
-    "/uploads/1768667117380-SCA-38.jpg",
-    "/uploads/1768667118058-SCA-36.jpg",
-    "/uploads/1768667118979-SCA-37.jpg",
-    "/uploads/1768667739158-SCA-13.jpg",
-    "/uploads/1768667740559-SCA-09.jpg",
-    "/uploads/1768667741440-SCA-10.jpg",
-    "/uploads/1768667742658-SCA-11.jpg",
-    "/uploads/1768667743578-SCA-12.jpg",
-    "/uploads/1768670343323-SCA-6.jpg",
-    "/uploads/1768670344429-SCA-7.jpg",
-    "/uploads/1768670345549-SCA-8.jpg",
-    "/uploads/1768670345576-SCA-09.jpg",
-    "/uploads/1768670345583-SCA-10.jpg",
-    "/uploads/1768671920655-SCA-7.jpg",
-    "/uploads/1768671920671-SCA-8.jpg",
-    "/uploads/1768671920678-SCA-09.jpg",
-    "/uploads/1768671920683-SCA-10.jpg"
-  ],
-  "reviews": [
-    {
-      "name": "Test",
-      "product": "Beans",
-      "review": "Hello there test"
-    },
-    {
-      "name": "Hello Testing",
-      "product": "Beans 2",
-      "review": "Hello"
-    }
-  ],
+  "gallery": [],
   "shopifyData": {
-    "retail": {
-      "today": 6,
-      "unfulfilled": 13
-    },
-    "trade": {
-      "today": 0,
-      "unfulfilled": 9
-    }
-  },
-  "lastUpdated": 1768672666000
+    "retail": {},
+    "trade": {}
+  }
 }

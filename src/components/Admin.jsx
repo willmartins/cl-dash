@@ -178,7 +178,7 @@ const Admin = ({ config, refresh }) => {
                 <section className="glass-card gallery-section" style={{ gridColumn: '1 / -1' }}>
                     <div className="section-header">
                         <h2>Team Photo Gallery</h2>
-                        {config.gallery.length > 0 && (
+                        {config && config.gallery && config.gallery.length > 0 && (
                             <button
                                 onClick={async () => {
                                     if (confirm('Are you sure you want to delete ALL photos? This cannot be undone.')) {
@@ -202,7 +202,7 @@ const Admin = ({ config, refresh }) => {
                         <input id="file-upload" type="file" multiple onChange={handleFileUpload} disabled={isUploading} />
                     </div>
                     <div className="image-list">
-                        {config.gallery.map((img, i) => (
+                        {config && config.gallery && config.gallery.map((img, i) => (
                             <div key={i} className="img-thumb">
                                 <img src={img} alt="Thumb" />
                                 <button onClick={() => deleteImage(img)}>×</button>
