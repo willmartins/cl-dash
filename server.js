@@ -34,7 +34,15 @@ let isMongoConnected = false;
 let mongoError = null;
 
 if (process.env.MONGODB_URI) {
-  mongoose.connect(process.env.MONGODB_URI)
+  // Sanitize URI: remove surrounding quotes if present (common Vercel copy-paste error)
+  const uri = process.env.MONGODB_URI.replace(/^['"]|['"]$/g, '');
+
+  mongoose.connect(uri, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    serverSelectionTimeoutMS: 5000, // Fail faster if network is blocked
+    socketTimeoutMS: 45000,
+  })
     .then(() => {
       isMongoConnected = true;
       console.log('Connected to MongoDB');
