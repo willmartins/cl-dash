@@ -33,15 +33,15 @@ const DispatchDashboard = ({ config }) => {
             <div className="stats-row">
               <OrderGroup
                 name="Retail Orders"
-                today={config.shopifyData.retail.today}
-                fulfill={config.shopifyData.retail.unfulfilled}
+                today={config.shopifyData?.retail?.today ?? 0}
+                fulfill={config.shopifyData?.retail?.unfulfilled ?? 0}
                 color="#7c3aed"
                 delay="0.1s"
               />
               <OrderGroup
                 name="Trade Orders"
-                today={config.shopifyData.trade.today}
-                fulfill={config.shopifyData.trade.unfulfilled}
+                today={config.shopifyData?.trade?.today ?? 0}
+                fulfill={config.shopifyData?.trade?.unfulfilled ?? 0}
                 color="#10b981"
                 delay="0.3s"
               />
