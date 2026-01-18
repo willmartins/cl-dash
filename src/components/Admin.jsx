@@ -138,7 +138,8 @@ const Admin = ({ config, refresh }) => {
                         fontWeight: 'bold',
                         fontSize: '0.8rem'
                     }}>
-                        {config._meta?.mongoConnected ? 'DB Connected' : 'DB Disconnected (Not Saving!)'}
+                        {/* Debug: {JSON.stringify(config._meta)} */}
+                        {config._meta?.mongoConnected ? 'DB Connected' : 'DB Disconnected (File Mode)'}
                     </div>
                     <button className="save-btn" onClick={saveConfig}>Save All Changes</button>
                 </div>
