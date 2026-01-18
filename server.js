@@ -31,14 +31,35 @@ cloudinary.config({
 
 // MongoDB
 let isMongoConnected = false;
+let mongoError = null;
+
 if (process.env.MONGODB_URI) {
   mongoose.connect(process.env.MONGODB_URI)
     .then(() => {
       isMongoConnected = true;
       console.log('Connected to MongoDB');
     })
-    .catch(err => console.error('MongoDB error:', err));
+    .catch(err => {
+      console.error('MongoDB error:', err);
+      mongoError = err.message;
+    });
 }
+
+// ...
+
+app.get('/api/config', async (req, res) => {
+  console.log('GET /api/config called');
+  const data = await getConfigs();
+  // Inject metadata for frontend debugging
+  const responseData = {
+    ...(data.toObject ? data.toObject() : data),
+    _meta: {
+      mongoConnected: isMongoConnected,
+      lastError: mongoError // <--- Expose backend error to frontend
+    }
+  };
+  res.json(responseData);
+});
 
 // Data Schema
 const configSchema = new mongoose.Schema({
