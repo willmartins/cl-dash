@@ -66,17 +66,22 @@ const TOKENS_FILE = path.join(__dirname, 'tokens.json');
 
 // Get Data (MongoDB > Local JSON)
 async function getConfigs() {
-  if (isMongoConnected) {
-    let doc = await DashboardConfig.findOne({ id: 'main' });
-    if (!doc) {
-      // Seed initial data if missing
-      doc = await DashboardConfig.create({
-        id: 'main',
-        ...await fs.readJson(DATA_FILE).catch(() => ({})) // Try to seed from local if exists
-      });
+  try {
+    if (isMongoConnected) {
+      let doc = await DashboardConfig.findOne({ id: 'main' });
+      if (!doc) {
+        doc = await DashboardConfig.create({
+          id: 'main',
+          ...await fs.readJson(DATA_FILE).catch(() => ({}))
+        });
+      }
+      return doc;
     }
-    return doc;
+  } catch (err) {
+    console.error("Mongo fetch error:", err);
+    // Fallthrough to local
   }
+
   // Fallback to local file
   if (await fs.pathExists(DATA_FILE)) {
     return await fs.readJson(DATA_FILE);
