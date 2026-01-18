@@ -92,7 +92,11 @@ const Admin = ({ config, refresh }) => {
             method: 'DELETE',
             headers: { 'x-admin-password': password }
         });
-        refresh();
+
+        setLocalConfig(prev => ({
+            ...prev,
+            gallery: prev.gallery.filter(item => item !== img)
+        }));
     };
 
 
