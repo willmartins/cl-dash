@@ -156,19 +156,31 @@ const Admin = ({ config, refresh }) => {
                     <div className="shopify-grid">
                         <div>
                             <label>Retail Today</label>
-                            <input type="number" value={localConfig.shopifyData.retail.today} onChange={e => handleShopifyChange('retail', 'today', e.target.value)} />
+                            <input type="number"
+                                value={localConfig.shopifyData?.retail?.today ?? 0}
+                                onChange={e => handleShopifyChange('retail', 'today', e.target.value)}
+                            />
                         </div>
                         <div>
                             <label>Retail Unfulfilled</label>
-                            <input type="number" value={localConfig.shopifyData.retail.unfulfilled} onChange={e => handleShopifyChange('retail', 'unfulfilled', e.target.value)} />
+                            <input type="number"
+                                value={localConfig.shopifyData?.retail?.unfulfilled ?? 0}
+                                onChange={e => handleShopifyChange('retail', 'unfulfilled', e.target.value)}
+                            />
                         </div>
                         <div>
                             <label>Trade Today</label>
-                            <input type="number" value={localConfig.shopifyData.trade.today} onChange={e => handleShopifyChange('trade', 'today', e.target.value)} />
+                            <input type="number"
+                                value={localConfig.shopifyData?.trade?.today ?? 0}
+                                onChange={e => handleShopifyChange('trade', 'today', e.target.value)}
+                            />
                         </div>
                         <div>
                             <label>Trade Unfulfilled</label>
-                            <input type="number" value={localConfig.shopifyData.trade.unfulfilled} onChange={e => handleShopifyChange('trade', 'unfulfilled', e.target.value)} />
+                            <input type="number"
+                                value={localConfig.shopifyData?.trade?.unfulfilled ?? 0}
+                                onChange={e => handleShopifyChange('trade', 'unfulfilled', e.target.value)}
+                            />
                         </div>
                     </div>
                 </section>
