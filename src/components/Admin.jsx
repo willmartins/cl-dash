@@ -65,6 +65,12 @@ const Admin = ({ config, refresh }) => {
             const result = await resp.json();
             if (resp.ok) {
                 console.log('Upload success:', result);
+                if (result.file) {
+                    setLocalConfig(prev => ({
+                        ...prev,
+                        gallery: [...(prev.gallery || []), result.file]
+                    }));
+                }
                 refresh();
             } else {
                 console.error('Upload failed:', result.error);
