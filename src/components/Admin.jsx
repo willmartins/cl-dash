@@ -71,7 +71,8 @@ const Admin = ({ config, refresh }) => {
                         gallery: [...(prev.gallery || []), result.file]
                     }));
                 }
-                refresh();
+                // Do NOT refresh here, as it might confuse local state vs server state race
+                // refresh();
             } else {
                 console.error('Upload failed:', result.error);
                 alert('Upload failed: ' + (result.error || 'Unknown error'));
