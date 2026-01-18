@@ -65,10 +65,10 @@ const Admin = ({ config, refresh }) => {
             const result = await resp.json();
             if (resp.ok) {
                 console.log('Upload success:', result);
-                if (result.file) {
+                if (result.imageUrls) {
                     setLocalConfig(prev => ({
                         ...prev,
-                        gallery: [...(prev.gallery || []), result.file]
+                        gallery: [...(prev.gallery || []), ...result.imageUrls]
                     }));
                 }
                 // Do NOT refresh here, as it might confuse local state vs server state race
