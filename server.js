@@ -55,7 +55,8 @@ app.get('/api/config', async (req, res) => {
     ...(data.toObject ? data.toObject() : data),
     _meta: {
       mongoConnected: isMongoConnected,
-      lastError: mongoError // <--- Expose backend error to frontend
+      lastError: mongoError, // <--- Expose backend error to frontend
+      envUriSet: !!process.env.MONGODB_URI // <--- Check if var exists at all
     }
   };
   res.json(responseData);

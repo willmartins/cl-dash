@@ -131,16 +131,9 @@ const Admin = ({ config, refresh }) => {
                 <h1>Dashboard Control Center</h1>
                 <div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
                     <div
-                        title={config._meta?.lastError || 'Unknown Error'}
-                        style={{
-                            padding: '0.5rem 1rem',
-                            borderRadius: '8px',
-                            background: config._meta?.mongoConnected ? '#10b981' : '#ef4444',
-                            color: 'white',
-                            fontWeight: 'bold',
-                            fontSize: '0.8rem'
-                        }}>
-                        {config._meta?.mongoConnected ? 'DB Connected' : 'DB Disconnected (Hover for why)'}
+                        title={!config._meta?.envUriSet ? 'MONGODB_URI Var Missing!' : (config._meta?.lastError || 'Connecting...')}
+                    >
+                        {config._meta?.mongoConnected ? 'DB Connected' : (!config._meta?.envUriSet ? 'Missing Env Var' : 'DB Disconnected')}
                     </div>
                     <button className="save-btn" onClick={saveConfig}>Save All Changes</button>
                 </div>
