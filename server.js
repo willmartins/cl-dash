@@ -263,7 +263,14 @@ async function checkShopifyUpdates() {
 
 app.get('/api/config', async (req, res) => {
   console.log('GET /api/config called');
-  const data = await getConfigs();
+  // Attempt to refresh shopify data if needed (every 5 mins)
+  let data;
+  try {
+    data = await checkShopifyUpdates();
+  } catch (e) {
+    console.error('Shopify update failed, falling back to cached config', e);
+    data = await getConfigs();
+  }
   // Inject metadata for frontend debugging
   const responseData = {
     ...(data.toObject ? data.toObject() : data),
