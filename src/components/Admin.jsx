@@ -8,7 +8,7 @@ const Admin = ({ config, refresh }) => {
 
     const handleLogin = (e) => {
         e.preventDefault();
-        if (inputPassword === 'BAL00n9822!') {
+        if (inputPassword === 'C0co@12') {
             setPassword(inputPassword);
             setIsAuthenticated(true);
         } else {
