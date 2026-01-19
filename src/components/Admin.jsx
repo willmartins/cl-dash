@@ -43,6 +43,24 @@ const Admin = ({ config, refresh }) => {
         refresh();
         alert('Settings saved!');
     };
+    const handleShopifySync = async () => {
+        try {
+            const resp = await fetch('/api/shopify/sync', {
+                method: 'POST',
+                headers: { 'x-admin-password': password }
+            });
+            const result = await resp.json();
+            if (result.success) {
+                setLocalConfig(result.data);
+                refresh();
+                alert('Shopify data synced successfully!');
+            } else {
+                alert('Sync failed: ' + (result.error || 'Unknown error'));
+            }
+        } catch (e) {
+            alert('Sync failed: ' + e.message);
+        }
+    };
 
     const [isUploading, setIsUploading] = useState(false);
 
@@ -222,7 +240,30 @@ const Admin = ({ config, refresh }) => {
                         <label>Dispatch Notes</label>
                         <textarea name="dispatchMessage" value={localConfig.dispatchMessage} onChange={handleChange} />
                     </div>
-                    <h3>Shopify Mock Data</h3>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
+                        <h3>Shopify Data</h3>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+                            {localConfig.shopifyLastChecked && (
+                                <span style={{ fontSize: '0.8rem', color: '#888' }}>
+                                    Last Sync: {new Date(localConfig.shopifyLastChecked).toLocaleTimeString()}
+                                </span>
+                            )}
+                            <button
+                                onClick={handleShopifySync}
+                                style={{
+                                    padding: '0.4rem 0.8rem',
+                                    fontSize: '0.8rem',
+                                    background: '#7c3aed',
+                                    color: 'white',
+                                    border: 'none',
+                                    borderRadius: '6px',
+                                    cursor: 'pointer'
+                                }}
+                            >
+                                ↻ Sync Now
+                            </button>
+                        </div>
+                    </div>
                     <div className="shopify-grid">
                         <div>
                             <label>Retail Today</label>

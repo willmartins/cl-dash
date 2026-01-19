@@ -274,7 +274,12 @@ app.get('/api/config', async (req, res) => {
   // Inject metadata for frontend debugging
   const responseData = {
     ...(data.toObject ? data.toObject() : data),
-    _meta: { mongoConnected: isMongoConnected }
+    _meta: {
+      mongoConnected: isMongoConnected,
+      lastError: mongoError,
+      envUriSet: !!process.env.MONGODB_URI,
+      shopifyLastChecked: data.shopifyLastChecked
+    }
   };
   res.json(responseData);
 });
@@ -293,6 +298,19 @@ app.post('/api/config', async (req, res) => {
 
   await saveConfigs(newData);
   res.json(newData);
+});
+
+app.post('/api/shopify/sync', async (req, res) => {
+  console.log('Force syncing Shopify...');
+  try {
+    const data = await getConfigs();
+    // Force update by setting lastChecked to 0
+    data.shopifyLastChecked = 0;
+    const updatedData = await checkShopifyUpdates();
+    res.json({ success: true, data: updatedData });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
 });
 
 app.post('/api/upload', upload.array('images', 5), async (req, res) => {
