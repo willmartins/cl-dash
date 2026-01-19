@@ -83,7 +83,7 @@ const Admin = ({ config, refresh }) => {
                             type: 'image/jpeg',
                             lastModified: Date.now()
                         }));
-                    }, 'image/jpeg', 0.8); // 80% quality JPEG
+                    }, 'image/jpeg', 0.95); // 95% quality JPEG
                 };
             };
         });

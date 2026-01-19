@@ -140,6 +140,7 @@ const DispatchDashboard = ({ config }) => {
         
         .photo-container {
            flex: 1;
+           height: 100%; /* Ensure it fills parent flex container */
            min-height: 0;
            border-radius: 24px;
            overflow: hidden;

@@ -122,13 +122,14 @@ const KitchenDashboard = ({ config }) => {
         }
         
         .welcome-card { 
-            flex: 0.3; 
+            height: 160px; /* Match Dispatch fixed height */
+            flex-shrink: 0;
             display: flex; 
             align-items: center; 
             padding: 2rem; 
         }
         .message-card { 
-            flex: 0.7; 
+            flex: 1; /* Take remaining space */
             padding: 2rem; 
         }
 
