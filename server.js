@@ -156,9 +156,14 @@ async function saveConfigs(data) {
 }
 
 async function getTokens() {
-  // For now, tokens stay in local JSON or Env vars. 
-  // In strict production, these should also be in DB. 
-  // We'll proceed with local file check for simplicity in this hybrid step.
+  // Preference: Environment variables > Local file
+  const tokens = {};
+  if (process.env.SHOPIFY_RETAIL_TOKEN) tokens[process.env.SHOPIFY_RETAIL_SHOP] = process.env.SHOPIFY_RETAIL_TOKEN;
+  if (process.env.SHOPIFY_TRADE_TOKEN) tokens[process.env.SHOPIFY_TRADE_SHOP] = process.env.SHOPIFY_TRADE_TOKEN;
+
+  if (Object.keys(tokens).length > 0) return tokens;
+
+  // Fallback to local file (for local dev dev only)
   if (await fs.pathExists(TOKENS_FILE)) {
     return await fs.readJson(TOKENS_FILE);
   }
